@@ -13,16 +13,28 @@ import java.util.LinkedList;
 import java.util.Map;
 
 public class TimeParser {
-    private HashMap<LocalDateTime, Integer> visitorsPerMinute = new HashMap<>();
-    private String fileName;
+    private final HashMap<LocalDateTime, Integer> visitorsPerMinute = new HashMap<>();
+    private final String fileName;
 
     private static final String DELIMITER = ",";
     private static final String TIME_DELIMITER = ":";
 
+    /**
+     * constructor
+     *
+     * @param fileName name of the file needed to parse
+     */
     public TimeParser(String fileName) {
         this.fileName = fileName;
     }
 
+    /**
+     * Parses the file to see how many visitors were present at any given time
+     *
+     * @return HashMap<LocalDateTime, Integer> A map of times and amount of visitors with minute percission
+     * @throws ParserException When file contains invalid format
+     * @throws IOException
+     */
     public HashMap<LocalDateTime, Integer> parseFile() throws ParserException, IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             for (String line; (line = br.readLine()) != null; ) {
@@ -47,6 +59,11 @@ public class TimeParser {
         return visitorsPerMinute;
     }
 
+    /**
+     * Finds the times that had the most visitors and returns them with the amount
+     *
+     * @return HighestVisitingInfo
+     */
     public HighestVisitingInfo getHighestVisitingTimes() {
         int maxVisitors = 0;
         LinkedList<String> highestTimes = new LinkedList<>();
@@ -69,6 +86,13 @@ public class TimeParser {
         return new HighestVisitingInfo(maxVisitors, highestTimes);
     }
 
+    /**
+     * Parses the time to LocalDateTime so it's easier to work with
+     *
+     * @param timeString time string needed to be parsed, formatted to "HH:mm"
+     * @return LocalDateTime parsed time
+     * @throws ParserException When time is formatted badly
+     */
     private static LocalDateTime parseTimeString(String timeString) throws ParserException {
         String[] pieces = timeString.split(TIME_DELIMITER);
         if (pieces.length != 2) {
