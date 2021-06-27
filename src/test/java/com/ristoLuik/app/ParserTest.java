@@ -12,12 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest {
-    private final static String testResourcePath = "/src/java/com/ristoLuik/app/";
-
+public class ParserTest {
     @Test
     public void shouldNotParseBadFile() {
         TimeParser parser = new TimeParser("BadFile.txt");
@@ -55,11 +50,11 @@ public class AppTest {
         TimeParser parser = new TimeParser("DualHighestTimes.txt");
         parser.parseFile();
         HighestVisitingInfo highestVisitingTimes = parser.getHighestVisitingTimes();
-        System.out.println(highestVisitingTimes.times);
 
         LinkedList<String> expectedTimes = new LinkedList<>();
         expectedTimes.add("13:04");
         expectedTimes.add("13:05");
+
         for (String time : highestVisitingTimes.times) {
             assertTrue(expectedTimes.contains(time));
         }

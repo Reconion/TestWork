@@ -6,9 +6,6 @@ import com.ristoLuik.app.library.exception.ParserException;
 
 import java.io.IOException;
 
-/**
- * Hello world!
- */
 public class App {
 
     public static void main(String[] args) {
