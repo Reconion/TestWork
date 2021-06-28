@@ -6,6 +6,7 @@ import com.ristoLuik.app.library.exception.ParserException;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.LinkedList;
 
 import static org.junit.Assert.assertEquals;
@@ -14,8 +15,10 @@ import static org.junit.Assert.assertTrue;
 
 public class ParserTest {
     @Test
-    public void shouldNotParseBadFile() {
-        TimeParser parser = new TimeParser("BadFile.txt");
+    public void shouldNotParseBadFile() throws IOException {
+        Path path = Path.of("", "src/test/resources").resolve("BadFile.txt");
+
+        TimeParser parser = new TimeParser(path.toString());
         assertThrows(ParserException.class, () -> {
             parser.parseFile();
         });
@@ -23,7 +26,9 @@ public class ParserTest {
 
     @Test
     public void shouldNotParseBadTimeDelimiter() {
-        TimeParser parser = new TimeParser("BadTimeDelimiter.txt");
+        Path path = Path.of("", "src/test/resources").resolve("BadTimeDelimiter.txt");
+
+        TimeParser parser = new TimeParser(path.toString());
         assertThrows(ParserException.class, () -> {
             parser.parseFile();
         });
@@ -31,7 +36,9 @@ public class ParserTest {
 
     @Test
     public void shouldNotParseBadTime() {
-        TimeParser parser = new TimeParser("badTime.txt");
+        Path path = Path.of("", "src/test/resources").resolve("badTime.txt");
+
+        TimeParser parser = new TimeParser(path.toString());
         assertThrows(ParserException.class, () -> {
             parser.parseFile();
         });
@@ -39,7 +46,9 @@ public class ParserTest {
 
     @Test
     public void shouldNotParseArrivalAfterLeaving() {
-        TimeParser parser = new TimeParser("ArrivalAfterLeaving.txt");
+        Path path = Path.of("", "src/test/resources").resolve("ArrivalAfterLeaving.txt");
+
+        TimeParser parser = new TimeParser(path.toString());
         assertThrows(ParserException.class, () -> {
             parser.parseFile();
         });
@@ -47,7 +56,9 @@ public class ParserTest {
 
     @Test
     public void shouldHandleMultipleHighestTimes() throws ParserException, IOException {
-        TimeParser parser = new TimeParser("DualHighestTimes.txt");
+        Path path = Path.of("", "src/test/resources").resolve("DualHighestTimes.txt");
+
+        TimeParser parser = new TimeParser(path.toString());
         parser.parseFile();
         HighestVisitingInfo highestVisitingTimes = parser.getHighestVisitingTimes();
 
